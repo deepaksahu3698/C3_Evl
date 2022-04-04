@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense</title>
+    <Style>
+                input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+        #head{
+            margin: auto;
+            text-decoration: underline;
+            color: rgb(60, 60, 165);
+            text-align: center;
+            font-size: 25px;
+        }
+#cont{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    width: 40%;
+    row-gap: 10px;
+}
+label{
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+input{
+    height: 20px;
+    border: 1px solid black;
+    outline: none;
+    font-weight: bold;
+}
+select{
+    height: 20px;
+    border: 1px solid black;
+    font-weight: bold;
+}
+#display{
+display: grid;
+grid-template-columns: repeat(4,1fr);
+gap: 20px;
+}
+#form_cont{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 1px solid red; */
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    height: 300px;
+    width: 50%;
+    margin: auto;
+}
+#btn{
+    margin:10px 0px ;
+    font-weight: bold;
+    font-size: 20px;
+    background-color: white;
+    border-radius:10px ;
+    height:30px;
+}
+#display{
+    margin-top: 20px;
+}
+#cont_div{
+
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    text-align: center;
+
+}
+#cont_div p{
+    color: royalblue;
+}
+
+    </Style>
+</head>
+<body>
+    <div id="head">
+        <h3>EXPENSE TRACKER</h3>
+    </div>
+    <div id="form_cont">
+        <form action="" id="cont">
+            <label for="">Select Month</label>
+            <select name="" id="sel" placeholder="Select month">
+<option value="Select month">Select month</option>
+<option value="January">January</option>
+<option value="February">February</option>
+<option value="March">March</option>
+<option value="April">April</option>
+<option value="May">May</option>
+<option value="June">June</option>
+<option value="July">July</option>
+<option value="August">August</option>
+<option value="September">September</option>
+<option value="October">October</option>
+<option value="November">November</option>
+<option value="December">December</option>
+
+            </select>
+            <label for="">Income</label>
+            <input type="number" name="" id="income">
+            <label for="">Expense</label>
+            <input type="number" id="expense">
+            <input type="submit" onclick="calculate()" id="btn">
+        </form>
+    </div>
+
+    <div id="display">
+
+    </div>
+    
+</body>
+<script>
+    function calculate(){
+        event.preventDefault()
+        let month=document.getElementById("sel").value
+        // console.log(month)
+        let income=document.getElementById("income").value
+        income=parseInt(income)
+        let expense=document.getElementById("expense").value
+        expense=parseInt(expense)
+
+        // console.log(typeof(income))
+        let saving=income-expense
+        // console.log(saving)
+
+        let arr=localStorage.getItem("person")?JSON.parse(localStorage.getItem("person")):[];
+        let obj={}
+        obj.month=month
+        obj.income=income
+        obj.expense=expense
+        obj.saving=saving
+        arr.push(obj)
+        localStorage.setItem("person",JSON.stringify(arr))
+console.log(arr)
+        var dis_div=document.getElementById("display")
+        dis_div.innerHTML=""
+        arr.forEach(e => {
+            let cont_div=document.createElement("div")
+            cont_div.setAttribute("id","cont_div")
+        let month_dis=document.createElement("h4")
+        month_dis.textContent=e.month
+        let income_para=document.createElement("p")
+        income_para.textContent=`Your income in Rs ${e.income}`
+        let expense_para=document.createElement("p")
+        expense_para.textContent=`Your income in Rs ${e.expense}`
+         let saving_para=document.createElement("p")
+         saving_para.textContent=`Your saving are Rs ${e.saving}`
+         cont_div.append(month_dis,income_para,expense_para,saving_para)
+         dis_div.append(cont_div)
+        });
+ 
+
+
+    }
+</script>
+</html>
